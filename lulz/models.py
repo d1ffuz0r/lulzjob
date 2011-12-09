@@ -21,7 +21,7 @@ class Job(models.Model):
     name = models.CharField(max_length=100,
                             verbose_name=u"Заголовок")
     desc = models.TextField(max_length=1000,
-                            verbose_name=u"Описание")
+                            verbose_name=u"Комментарий")
     tags = models.CharField(max_length=100,
                             verbose_name=u"Ключевые слова")
     likes = models.IntegerField(verbose_name=u"Лайки", default=0)

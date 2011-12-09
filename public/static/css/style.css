@@ -478,7 +478,7 @@ input.button {
     padding: 10px;
     width: 500px;
     left: 30%;
-    position: fixed;
+    position: absolute;
     z-index: 100;
     box-shadow: #8C9F0D 0px 0px 15px;
 }
