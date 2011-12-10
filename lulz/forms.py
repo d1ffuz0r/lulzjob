@@ -12,14 +12,20 @@ class AddJob(forms.ModelForm):
             "desc": forms.Textarea(attrs={"class": "required"}),
             "tags": forms.TextInput(attrs={"class": "required"}),
             "link": forms.TextInput(attrs={"class": "required url"}),
-            "cateogry": forms.CheckboxInput(attrs={"class": "required digits"}),
+            "cateogry": forms.CheckboxInput(
+                attrs={"class": "required digits"}
+            ),
         }
 
 
 class AddComment(forms.ModelForm):
     class Meta:
         model = Comments
-        fields = ("text",)
+        fields = ("text", "job")
+        widgets = {
+            "text": forms.Textarea(attrs={"class": "required"}),
+            "job": forms.HiddenInput()
+        }
 
 
 class SearchForm(forms.Form):

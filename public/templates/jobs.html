@@ -1,280 +1,105 @@
-{% load forms %}
-{% csrf_token %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <meta name="Description" content="Information architecture, Web Design, Web Standards." />
-    <meta name="Keywords" content="your, keywords" />
-    <meta http-equiv="Content-Type" content="text/html; charset=urf-8" />
-    <meta name="Distribution" content="Global" />
-    <meta name="Robots" content="index,follow" />
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% csrf_token %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.validate.ru.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/lol.js"></script>
-    <title>ЖОПЛУЛЗ ГАГАГА</title></head>
-<body>
-<div class="bg hidden"></div>
-<div id="full" class="popup hidden">
-    <div class="close">x</div>
-    <div class="desc">
-
+    <title>ЛУЛЗДЖОБ</title>
+  </head>
+  <body>
+    <div class="bg hidden"></div>
+    <div id="full" class="popup hidden">
+      <div class="close">x</div>
+      <div class="desc"></div>
+      <div class="commentaries" style="text-align: left;">
+        <h3>Комментарии</h3>
+        <ul class="comments"></ul>
+        <div class="addcomment">
+          <form action="/ajax/addcomment/" method="post" id="addcomment">
+            <fieldset>
+              {% csrf_token %}
+              <p>
+                {{ addcomment }}
+                <br/>
+                <input name="submit" class="button sendcomment" type="submit"/>
+              </p>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="comments">
-
-    </div>
-</div>
-<div class="popup add hidden">
-    <div class="close">x</div>
-    <h3>Добавить вакансию</h3>
-    <div class="error true hidden">Вакансия добавлена на рассмотрение</div>
-    <div class="error false hidden">ЧТО ТО ПОШЛО НЕ ТАК! ЭВОКУИРУЕМСЯ!</div>
-    <form action="/ajax/addvacancy/" method="post" id="addvacancy">
+    <div class="popup add hidden" style="text-align: left;">
+      <div class="close">x</div>
+      <h3>Добавить вакансию</h3>
+      <div class="error true hidden">Вакансия добавлена на рассмотрение</div>
+      <div class="error false hidden">ЧТО ТО ПОШЛО НЕ ТАК! ЭВОКУИРУЕМСЯ!</div>
+      <form action="/ajax/addvacancy/" method="post" id="addvacancy">
         <fieldset>
-        {% csrf_token %}
-        <p>
-            {% addjob %}
+          {% csrf_token %}
+          <p>
+            {{ addjob }}
             <br/><br/>
             <input name="submit" class="button addvacancy" type="submit"/>
-        </p>
+          </p>
         </fieldset>
-    </form>
-</div>
-<!-- wrap starts here -->
-<div id="wrap">
-	<div id="top-bg"></div>
-	<!--header -->
-	<div id="header">
-		<h1 id="logo-text"><a href="#" title="">ДЖОП<span>ЛУЛЗ</span></a></h1>
-		<h2 id="slogan">самые ёбнутые вакансии</h2>
+      </form>
+    </div>
+    <div id="wrap">
+      <div id="top-bg"></div>
+      <div id="header">
+        <h1 id="logo-text"><a href="{{ BASE_URL }}" title="ЛУЛЗДЖОБ">ЛУЛЗ<span>ДЖОБ</span></a></h1>
+        <h2 id="slogan" title="Наркоманы штоле?">Самые ёбнутые вакансии рунета</h2>
         <button id="add">Добавить</button>
-	<!--header ends-->
-	</div>
-	<!-- navigation starts-->
-
-	<div  id="nav">
-		<ul>
-			<li>{% search %}</li>
-		</ul>
-	<!-- navigation ends-->
-	</div>
-    {% comment %}
-	{% endcomment %}
-
-	<!-- content-wrap starts -->
-	<div id="content-wrap">
-		<div id="sidebar">
-			<h1>Поиск</h1>
-			<form action="#" class="searchform">
-				<p>
-  				<input name="search" class="button" value="Search" type="submit" />
-				</p>
-			</form>
-
-			<h1>Sidebar Menu</h1>
-			<ul class="sidemenu">
-				<li><a href="#">Home</a></li>
-				<li><a href="#TemplateInfo">Template Info</a></li>
-				<li><a href="#SampleTags">Sample Tags</a></li>
-				<li><a href="http://www.styleshout.com/">More Free Templates</a></li>
-				<li><a href="http://www.4templates.com/?aff=ealigam">Premium Templates</a></li>
-			</ul>
-
-			<h1>Links</h1>
-			<ul class="sidemenu">
-				<li><a href="http://www.pdphoto.org/">PDPhoto.org</a></li>
-				<li><a href="http://www.squidfingers.com/patterns/">Squidfingers | Patterns</a></li>
-				<li><a href="http://www.alistapart.com">Alistapart</a></li>
-				<li><a href="http://www.cssremix.com">CSS Remix</a></li>
-				<li><a href="http://www.dark-i.com/">Dark Eye</a></li>
-			</ul>
-
-			<h1>Sponsors</h1>
-			<ul class="sidemenu">
-				<li><a href="http://www.4templates.com/?aff=ealigam"><strong>4templates</strong></a> <br /> Low Cost Hi-Quality Templates</li>
-				<li><a href="http://store.templatemonster.com?aff=ealigam"><strong>TemplateMonster</strong></a> <br /> Delivering the Best Templates on the Net!</li>
-				<li><a href="http://www.fotolia.com/partner/114283"><strong>Fotolia</strong></a> <br /> Free stock images or from $1</li>
-				<li><a href="http://www.text-link-ads.com/?ref=40025"><strong>Text Link Ads</strong></a> <br /> Monetized your website</li>
-				<li><a href="http://www.dreamhost.com/r.cgi?287326"><strong>Dreamhost</strong></a> <br /> Premium webhosting</li>
-			</ul>
-
-			<h1>Wise Words</h1>
-			<p>&quot;Great works are performed not by strength,
-			but by perseverance.&quot; </p>
-
-			<p class="align-right">- Samuel Johnson</p>
-
-			<h1>Support Styleshout</h1>
-			<p>If you are interested in supporting my work and would like to contribute, you are
-			welcome to make a small donation through the
-			<a href="http://www.styleshout.com/">donate link</a> on my website - it will
-			be a great help and will surely be appreciated.</p>
-
-		<!-- sidebar ends -->
-		</div>
-
-		<div id="main">
-            {% if jobs %}
-                {% for job in jobs %}
-                <div class="cat_{{ job.category.id }}">
-                    <a name="TemplateInfo"></a>
-                    <h1>{{ job.name }}</h1>
-                    <p>{{ job.desc }}</p>
-                    <p class="post-footer">
-                        <a href="#full" class="readmore" id="{{ job.id }}">Смотреть полностью</a> |
-                        <a href="#" class="comments">Комментарии ({{ likes.comments.all|length }})</a> |
-                        <span class="date">{{ job.date|date:"d:m:Y" }}</span> |
-                        <span class="date">{{ job.likes.all|length }}</span>
-
-                    </p>
-                </div>
-                {% endfor %}
+      </div>
+      <div id="nav">
+        <ul>
+          <li id="current"><a id="900009" href="#all" title="Все">Все</a></li>{% for category in categories %}
+          <li><a id="{{ category.id }}" href="#{{ category.name }}" title="{{ category.name }}">{{ category.name }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      <div id="content-wrap">
+        <div id="sidebar">
+          <img src="{{ STATIC_URL }}images/1306311362719.png" alt="WTF">
+        </div>
+        <div id="main">
+        {% if jobs %}
+          {% for job in jobs %}
+            <article>
+            {% if forloop.counter0 > 9 %}
+            <div class="cat_{{ job.category.id }} hidden {{ forloop.counter0 }}">
             {% else %}
-                <h1>Нет вакансий</h1>
+            <div class="cat_{{ job.category.id }} {{ forloop.counter0 }}">
             {% endif %}
-            {% comment %}
-
-			<h1>Sample Tags</h1>
-
-			<h3>Code</h3>
-			<p><code>
-			code-sample { <br />
-			font-weight: bold;<br />
-			font-style: italic;<br />
-			}
-			</code></p>
-
-			<h3>Example Lists</h3>
-
-			<ol>
-				<li>Here is an example</li>
-				<li>of an ordered list</li>
-			</ol>
-
-			<ul>
-				<li>Here is an example</li>
-				<li>of an unordered list</li>
-			</ul>
-
-			<h3>Blockquote</h3>
-			<blockquote><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-			nibh euismod tincidunt ut laoreet dolore magna aliquam erat....</p></blockquote>
-
-			<h3>Image and text</h3>
-			<p><a href="http://getfirefox.com/"><img src="images/firefox-gray.jpg" width="100" height="120" alt="firefox" class="float-left" /></a>
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-			Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
-			posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum
-			odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra
-			condimentum, lorem tellus eleifend magna, eget fringilla velit magna id neque. Curabitur vel urna.
-			In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-			Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
-			posuere nunc justo tempus leo.
-			</p>
-
-			<h3>Table Styling</h3>
-			<table>
-				<tr>
-					<th class="first"><strong>post</strong> date</th>
-					<th>title</th>
-					<th>description</th>
-				</tr>
-				<tr class="row-a">
-					<td class="first">04.18.2007</td>
-					<td><a href="#">Augue non nibh</a></td>
-					<td><a href="#">Lobortis commodo metus vestibulum</a></td>
-				</tr>
-				<tr class="row-b">
-					<td class="first">04.18.2007</td>
-					<td><a href="#">Fusce ut diam bibendum</a></td>
-					<td><a href="#">Purus in eget odio in sapien</a></td>
-				</tr>
-				<tr class="row-a">
-					<td class="first">04.18.2007</td>
-					<td><a href="#">Maecenas et ipsum</a></td>
-					<td><a href="#">Adipiscing blandit quisque eros</a></td>
-				</tr>
-				<tr class="row-b">
-					<td class="first">04.18.2007</td>
-					<td><a href="#">Sed vestibulum blandit</a></td>
-					<td><a href="#">Cras lobortis commodo metus lorem</a></td>
-				</tr>
-			</table>
-            {% endcomment %}
-		<!-- main ends -->
-		</div>
-
-	<!-- content-wrap ends-->
-	</div>
-
-	<!-- footer starts -->
-	<div id="footer-wrap">
-        {% comment %}
-		<div id="footer-columns">
-
-			<div class="col3">
-				<h2>Tincidunt</h2>
-				<ul>
-					<li><a href="#">consequat molestie</a></li>
-					<li><a href="#">sem justo</a></li>
-					<li><a href="#">semper</a></li>
-					<li><a href="#">magna sed purus</a></li>
-					<li><a href="#">tincidunt</a></li>
-				</ul>
-			</div>
-
-			<div class="col3-center">
-				<h2>Sed purus</h2>
-				<ul>
-					<li><a href="#">consequat molestie</a></li>
-					<li><a href="#">sem justo</a></li>
-					<li><a href="#">semper</a></li>
-					<li><a href="#">magna sed purus</a></li>
-					<li><a href="#">tincidunt</a></li>
-				</ul>
-			</div>
-
-			<div class="col3">
-				<h2>Praesent</h2>
-				<ul>
-					<li><a href="#">consequat molestie</a></li>
-					<li><a href="#">sem justo</a></li>
-					<li><a href="#">semper</a></li>
-					<li><a href="#">magna sed purus</a></li>
-					<li><a href="#">tincidunt</a></li>
-				</ul>
-			</div>
-		<!-- footer-columns ends -->
+              <h1>{{ job.name }}</h1>
+              <p>{{ job.desc }}</p>
+              <p class="post-footer">
+                <a href="#full" class="readmore" id="{{ job.id }}">Полностью</a> |
+                Комментарии ({{ job.jobcomm.count }}) |
+                <span class="date">{{ job.date|date:"j:m:Y" }}</span> |
+                <span class="date likes">Рейтинг: {{ job.likes }}</span>
+              </p>
+            </div>
+            </article>
+          {% endfor %}
+          {% if count > 10 %}
+            <p class="post-footer morebut" style="float: right;"><a href="#more" class="more">Больше</a></p>
+          {% endif %}
+        {% else %}
+          <h1>ПРИШЛО ВРЕМЯ ДОБАВИТЬ ВАКАНСИЙ</h1>
+        {% endif %}
+        </div>
+      </div>
+      <div id="footer-wrap">
+        <div id="footer-bottom">
+          <p>&copy; 2011 <strong>ЛУЛЗДЖОБ</strong></p>
+        </div>
+      </div>
     </div>
-    {% endcomment %}
-		<div id="footer-bottom">
-
-			<p>
-			&copy; 2011 <strong>ДЖОПЛУЛЗ</strong>
-        {% comment %} |
-			Design by: <a href="http://www.styleshout.com/">styleshout</a> |
-			Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> |
-			<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
-   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="#">Home</a>&nbsp;|&nbsp;
-   		<a href="#">Sitemap</a>&nbsp;|&nbsp;
-	   	<a href="#">RSS Feed</a>
-   		</p>
-   		{% endcomment %}
-
-
-    </div>
-    <!-- footer ends-->
-</div>
-<!-- wrap ends here -->
-</div>
-
-</body>
+  </div>
+  </body>
 </html>
-
-
-
-<hr>
-{% addcomment %}
-<hr>

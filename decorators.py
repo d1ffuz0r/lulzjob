@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
-import datetime
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -27,6 +26,7 @@ def render_to(template):
         return wrapper
     return renderer
 
+
 def render_json(func):
     """Decorator for rendering data as json"""
     def wrap(request, *args, **kwargs):
@@ -38,4 +38,3 @@ def render_json(func):
             pass
         return HttpResponse(dumps(response), mimetype="application/json")
     return wrap
-  
