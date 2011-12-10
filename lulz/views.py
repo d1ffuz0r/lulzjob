@@ -124,19 +124,20 @@ def full(request):
 @render_json
 def like(request):
     result = {"success": False}
+
     if request.POST:
         id = int(request.POST["id"])
         type = request.POST["type"]
 
-        job = Job.objects.filter(pk=id).get()
+        j = Job.objects.filter(pk=id)
 
-        if job:
+        if j and j.get():
+            job = j.get()
             like = Likes.objects.filter(job=job,
                                         agent=request.META["HTTP_USER_AGENT"],
                                         ip=request.META["REMOTE_ADDR"])
             if like:
                 result.update({"message": "Уже голосовали"})
-                return result
             else:
                 Likes.objects.create(job=job,
                                      type=type,
@@ -148,7 +149,9 @@ def like(request):
                 if type == "unlike":
                     job.likes -= 1
                     job.save()
+
                 result.update({"success": True, "likes": job.likes})
+            return result
         else:
             return result
     return result

@@ -13,7 +13,7 @@ class ViewsTests(TestCase):
 
     def test_home(self):
         request = self.client.get("/")
-        self.assertContains(request, text="ДЖОПЛУЛЗ")
+        self.assertContains(request, text="ЛУЛЗДЖОБ")
 
     def test_admin(self):
         request = self.client.get("/admin/")
@@ -21,7 +21,7 @@ class ViewsTests(TestCase):
 
     def test_full_vacancy_get_fail(self):
         request = self.client.get("/ajax/full/")
-        self.assertEqual(request.content, '{"success": false}')
+        self.assertContains(request, text='{"success": false}')
 
     def test_full_vacancy_ajax_true(self):
         self.image = Image.objects.create(name="phpp",
@@ -42,9 +42,9 @@ class ViewsTests(TestCase):
 
     def test_create_comment_get_false(self):
         request = self.client.get("/ajax/addcomment/")
-        self.assertEqual(request.content, '{"success": false}')
+        self.assertContains(request, text='{"success": false}')
 
-    @skip("working")
+    @skip("add comment: works")
     def test_create_comment_ajax_true(self):
         self.image = Image.objects.create(name="phpp",
                                           image="img/php.png")
@@ -52,22 +52,21 @@ class ViewsTests(TestCase):
         Job.objects.create(name="test",
                            desc="description",
                            category=category)
-        print self.job.id
         request = self.client.post("/ajax/addcomment/", data={
             "text": "test",
             "job": 1
         })
-        self.assertEqual(request.content, '{"success": true}')
+        self.assertContains(request, text='{"success": true}')
 
     def test_create_comment_ajax_false(self):
         request = self.client.post("/ajax/addcomment/", data={
             "text": "test"
         })
-        self.assertEqual(request.content, '{"success": false}')
+        self.assertContains(request, text='{"success": false}')
 
     def test_create_vacancy_get_false(self):
         request = self.client.get("/ajax/addvacancy/")
-        self.assertEqual(request.content, '{"success": false}')
+        self.assertContains(request, text='{"success": false}')
 
     def test_create_vacancy_ajax_true(self):
         request = self.client.post("/ajax/addvacancy/", data={
@@ -77,7 +76,7 @@ class ViewsTests(TestCase):
             "category": 1,
             "link": "http://google.com"
         })
-        self.assertEqual(request.content, '{"success": true}')
+        self.assertContains(request, text='{"success": true}')
 
     def test_create_vacancy_ajax_false(self):
         request = self.client.post("/ajax/addvacancy/", data={
@@ -86,8 +85,79 @@ class ViewsTests(TestCase):
             "tags": "test, test1, test2",
             "category": 1,
         })
-        self.assertEqual(request.content, '{"success": false}')
+        self.assertContains(request, text='{"success": false}')
 
+    def test_fetch_get_false(self):
+        request = self.client.get("/ajax/fetch/")
+        self.assertContains(request, text='{"jobs": [], "success": false}')
+
+    def test_fetch_ajax_true(self):
+        category = Category.objects.create(name="php")
+        self.job = Job.objects.create(name="test",
+                                      desc="description",
+                                      category=category,
+                                      published=True)
+        request = self.client.post("/ajax/fetch/", data={
+            "cat": 900009
+        })
+        self.assertContains(request,
+            text='{"jobs": [{"category": 2, "likes": 0, "name": "test",'
+        )
+
+    def test_fetch_ajax_true1(self):
+        category = Category.objects.create(name="php")
+        self.job = Job.objects.create(name="test",
+                                      desc="description",
+                                      category=category,
+                                      published=True)
+        request = self.client.post("/ajax/fetch/", data={
+            "cat": 2
+        })
+        self.assertContains(request,
+            text='{"jobs": [{"category": 2, "likes": 0, "name": "test",'
+        )
+
+    def test_like_get_false(self):
+        request = self.client.get("/ajax/like/")
+        self.assertContains(request, text='{"success": false}')
+
+    @skip("add like: works")
+    def test_like_ajax_true(self):
+        category = Category.objects.create(name="php")
+        self.job = Job.objects.create(name="test",
+                                      desc="description",
+                                      category=category,
+                                      published=True)
+        request = self.client.post("/ajax/like/", data={
+            "id": 1,
+            "type": "like"
+        })
+        print request
+
+    @skip("add ulike: works")
+    def test_unlike_ajax_true(self):
+        category = Category.objects.create(name="php")
+        self.job = Job.objects.create(name="test",
+                                      desc="description",
+                                      category=category,
+                                      published=True)
+        request = self.client.post("/ajax/like/", data={
+            "id": 1,
+            "type": "unlike"
+        })
+        print request
+
+    def test_like_ajax_false(self):
+        category = Category.objects.create(name="php")
+        self.job = Job.objects.create(name="test",
+                                      desc="description",
+                                      category=category,
+                                      published=True)
+        request = self.client.post("/ajax/like/", data={
+            "id": 22,
+            "type": "unlike"
+        })
+        self.assertContains(request, text='{"success": false}')
 
 class ModelsTest(TestCase):
     def setUp(self):
