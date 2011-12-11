@@ -276,6 +276,8 @@ input.button {
     cursor: pointer;
     font: bold 1.4em 'Trebuchet MS', Tahoma, Sans-serif;
     color: #8C9F0D;
+    border: 1px solid;
+    box-shadow: black 0 0 10px;
 }
 
 /* header-photo */
