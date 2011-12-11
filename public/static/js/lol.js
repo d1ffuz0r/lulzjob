@@ -84,7 +84,7 @@ $(document).ready(function()
                 JOB += '<a href="#full" class="readmore" id="' + job.id + '">Полностью</a> | ';
                 JOB += 'Комментарии (' + job.comments + ') | ';
                 JOB += '<span class="date">' + d.getDate() + ':' + (m+1) + ':' + d.getFullYear() + '</span> | ';
-                JOB += '<span class="date">' + job.likes + '</span>';
+                JOB += '<span class="date">Рейтинг: ' + job.likes + '</span>';
                 JOB += '</p>';
                 JOB += '</div>';
 
@@ -104,7 +104,7 @@ $(document).ready(function()
     // show create vacancy form
     $("#add").click(function()
     {
-        $(".add").show();
+        $(".add, .add form").show();
     });
 
     $(".close").click(function()
@@ -197,7 +197,7 @@ $(document).ready(function()
                     COMM = '<h1>Нет комментариев</h1>';
                 }
 
-                $(".bg").css('background', 'url(/media/' + v.cat_image + ')');
+                $(".bg").css('background', 'url(/site_media/' + v.cat_image + ')');
                 $("#full, .bg").show();
 
                 $("#full .desc").html(DESC);

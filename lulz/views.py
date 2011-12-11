@@ -2,6 +2,7 @@
 from decorators import render_json, render_to
 from lulz.forms import AddJob, AddComment, SearchForm
 from models import Job, Comments, Category, Likes
+from django.core.mail import send_mail
 
 
 escape = lambda string: string.replace("&", "&amp;").\
@@ -44,12 +45,9 @@ def fetch(request):
             result["jobs"].append({"id": job.id,
                                    "name": job.name,
                                    "desc": escape(job.desc),
-                                   "tags": job.tags,
                                    "likes": job.likes,
-                                   "link": job.link,
                                    "date": job.date.__str__(),
-                                   "comments": job.jobcomm.count(),
-                                   "category": job.category.id})
+                                   "comments": job.jobcomm.count()})
 
         result["success"] = True
     return result
@@ -62,6 +60,10 @@ def addvacancy(request):
         form = AddJob(request.POST)
         if form.is_valid():
             form.save()
+            send_mail("Added new cavancy: %s" % form.cleaned_data["name"],
+                       "Added new vacancy: %s" % form.cleaned_data["name"],
+                       "report@joblulz.tk",
+                       ["d1fffuz0r@gmail.com"])
             return {"success": True}
         else:
             return result
