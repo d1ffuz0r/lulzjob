@@ -118,7 +118,8 @@ $(document).ready(function()
         $(".bg").css('background-image','');
     });
 
-    $("#addvacancy").validate({
+    $("#addvacancy").validate(
+    {
         onkeyup: false,
         onblur : false,
         submitHandler: function()
@@ -138,7 +139,8 @@ $(document).ready(function()
         }
     });
 
-    $("#addcomment").validate({
+    $("#addcomment").validate(
+    {
         onkeyup: false,
         onblur : false,
         submitHandler: function()

@@ -5,7 +5,7 @@ from django.db import models
 class Image(models.Model):
     name = models.CharField(max_length=100,
                             verbose_name=u"Название")
-    image = models.ImageField(upload_to='backgrounds',
+    image = models.ImageField(upload_to="backgrounds",
                                   verbose_name=u"Фон")
 
     class Meta:
@@ -38,18 +38,18 @@ class Job(models.Model):
     desc = models.TextField(max_length=1000,
                             verbose_name=u"Комментарий")
     tags = models.CharField(max_length=100,
-                            verbose_name=u"Ключевые слова")
+                            verbose_name=u"Теги")
     likes = models.IntegerField(verbose_name=u"Лайки", default=0)
     link = models.URLField(max_length=100,
-                            verbose_name=u"Ссылка на оригинал")
+                           verbose_name=u"Ссылка на оригинал")
     published = models.BooleanField(default=False,
                                     verbose_name=u"Опубликовано")
     date = models.DateTimeField(auto_now=True,
                                 verbose_name=u"Дата публикации")
     category = models.ForeignKey(Category,
                                  verbose_name=u"Категория")
-    comments = models.ManyToManyField('Comments',
-                                      related_name='jobcomm',
+    comments = models.ManyToManyField("Comments",
+                                      related_name="jobcomm",
                                       blank=True,
                                       verbose_name=u"Комментарии")
 
@@ -65,7 +65,7 @@ class Comments(models.Model):
     text = models.CharField(max_length=200,
                             verbose_name=u"Текст комментария")
     job = models.ForeignKey(Job,
-                            related_name='jobcomm',
+                            related_name="jobcomm",
                             verbose_name=u"Вакансия")
     agent = models.CharField(max_length=200, verbose_name=u"User-Agent")
     ip = models.CharField(max_length=100, verbose_name=u"IP")
@@ -75,16 +75,16 @@ class Comments(models.Model):
         verbose_name_plural = u"Комментарии"
 
     def __unicode__(self):
-        return '%s/%s' % (self.text[:10], self.job.name)
+        return "%s/%s" % (self.text[:10], self.job.name)
 
 
 class Likes(models.Model):
     CHOISES = (
-        ('1', '+'),
-        ('0', '-')
+        ("1", "+"),
+        ("0", "-")
     )
     job = models.ForeignKey(Job,
-                            related_name='joblikes',
+                            related_name="joblikes",
                             verbose_name=u"Вакансия")
     agent = models.CharField(max_length=200, verbose_name=u"User-Agent")
     ip = models.CharField(max_length=100, verbose_name=u"IP")
@@ -95,4 +95,4 @@ class Likes(models.Model):
         verbose_name_plural = u"Лайки"
 
     def __unicode__(self):
-        return '%s/%s' % (self.job.name, self.type)
+        return "%s/%s" % (self.job.name, self.type)
