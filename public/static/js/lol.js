@@ -64,39 +64,44 @@ $(document).ready(function()
         {
             $("#main").empty();
             total = 0;
-
-            $.each(res.jobs, function(index, job)
+            if(res.jobs.length)
             {
-                var JOB = '';
-                var d = new Date(job.date);
-                var m = parseInt(d.getMonth());
-                if(total > 9)
+                $.each(res.jobs, function(index, job)
                 {
-                    JOB += '<div class="cat_' + job.category + ' ' + total + ' hidden">';
-                }
-                else
-                {
-                    JOB += '<div class="cat_' + job.category + ' ' + total + '">';
-                }
-                JOB += '<h1>' + job.name + '</h1>';
-                JOB += '<p>' + job.desc + '</p>';
-                JOB += '<p class="post-footer">';
-                JOB += '<a href="#full" class="readmore" id="' + job.id + '">Полностью</a> | ';
-                JOB += 'Комментарии (' + job.comments + ') | ';
-                JOB += '<span class="date">' + d.getDate() + ':' + (m+1) + ':' + d.getFullYear() + '</span> | ';
-                JOB += '<span class="date">Рейтинг: ' + job.likes + '</span>';
-                JOB += '</p>';
-                JOB += '</div>';
+                    var html = '';
+                    var d = new Date(job.date);
+                    var m = parseInt(d.getMonth());
+                    if(total > 9)
+                    {
+                        html += '<div class="cat_' + job.category + ' ' + total + ' hidden">';
+                    }
+                    else
+                    {
+                        html += '<div class="cat_' + job.category + ' ' + total + '">';
+                    }
+                    html += '<h1>' + job.name + '</h1>';
+                    html += '<p>' + job.desc + '</p>';
+                    html += '<p class="post-footer">';
+                    html += '<a href="#full" class="readmore" id="' + job.id + '">Полностью</a> | ';
+                    html += 'Комментарии (' + job.comments + ') | ';
+                    html += '<span class="date">' + d.getDate() + ':' + (m+1) + ':' + d.getFullYear() + '</span> | ';
+                    html += '<span class="date">Рейтинг: ' + job.likes + '</span>';
+                    html += '</p>';
+                    html += '</div>';
 
-                $("#main").append(JOB);
+                    $("#main").append(html);
 
-                total += 1;
-            });
+                    total += 1;
+                });
+            }
+            else
+            {
+                $("#main").append("<h1>ПРИШЛО ВРЕМЯ ДОБАВИТЬ ВАКАНСИЙ</h1>");
+            }
 
             if(total > 10)
             {
-                var HTML = '<p class="post-footer morebut" style="float: right;"><a href="#more" class="more">Больше</a></p>';
-                $("#main").append(HTML);
+                $("#main").append('<p class="post-footer morebut" style="float: right;"><a href="#more" class="more">Больше</a></p>');
             }
         }, "json");
     });
@@ -140,17 +145,17 @@ $(document).ready(function()
         {
             $("#addcomment").ajaxSubmit(function(res)
             {
-                var COMMENT = '';
+                var comment = '';
 
                 if (res.success)
                 {
-                    COMMENT += '<li>';
-                    COMMENT += '<p>' + res.text + '</p>';
-                    COMMENT += '</li>';
+                    comment += '<li>';
+                    comment += '<p>' + res.text + '</p>';
+                    comment += '</li>';
 
                     $("textarea[name=text]").val('');
                     $("#full .comments h1").remove();
-                    $("#full .comments").append(COMMENT);
+                    $("#full .comments").append(comment);
                 }
                 else
                 {
@@ -167,41 +172,41 @@ $(document).ready(function()
         $.post('/ajax/full/',{id:id, csrfmiddlewaretoken: csrf}, function(res)
         {
             var v = res.vacancy;
-            var DESC = '';
-            var COMM = '';
+            var desc = '';
+            var comm = '';
 
             if(res.success)
             {
                 $("input[name=job]").val(v.id);
 
-                DESC += '<h3>'+v.name+'</h3>';
-                DESC += '<p>'+v.desc+'</p>';
-                DESC += '<p class="post-footer">';
-                DESC += '<span class="date link"><a href="' + v.link + '" title="' + v.link + '" target="_blank">Оригинал</a></span>';
-                DESC += '<span class="date likes"><span type="like" class="like">ГАГАГА</span>  ';
-                DESC += '<span class="counter" id="' + v.id + '">'+v.likes+'</span>';
-                DESC += '  <span type="unlike" class="like">WTF?</span> </span>';
-                DESC += '</p>';
+                desc += '<h3>'+v.name+'</h3>';
+                desc += '<p>'+v.desc+'</p>';
+                desc += '<p class="post-footer">';
+                desc += '<span class="date link"><a href="' + v.link + '" title="' + v.link + '" target="_blank">Оригинал</a></span>';
+                desc += '<span class="date likes"><span type="like" class="like">ГАГАГА</span>  ';
+                desc += '<span class="counter" id="' + v.id + '">'+v.likes+'</span>';
+                desc += '  <span type="unlike" class="like">WTF?</span> </span>';
+                desc += '</p>';
 
                 if(res.comments.length > 0)
                 {
                     $.each(res.comments, function(index, comment)
                     {
-                        COMM += '<li>';
-                        COMM += '<p>' + comment + '</p>';
-                        COMM += '</li>';
+                        comm += '<li>';
+                        comm += '<p>' + comment + '</p>';
+                        comm += '</li>';
                     });
                 }
                 else
                 {
-                    COMM = '<h1>Нет комментариев</h1>';
+                    comm = '<h1>Нет комментариев</h1>';
                 }
 
                 $(".bg").css('background', 'url(/site_media/' + v.cat_image + ')');
                 $("#full, .bg").show();
 
-                $("#full .desc").html(DESC);
-                $("#full .comments").html(COMM);
+                $("#full .desc").html(desc);
+                $("#full .comments").html(comm);
             }
             {
                 $("#full").show();
