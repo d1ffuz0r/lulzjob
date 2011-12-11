@@ -21,13 +21,6 @@ DATABASES = {
 }
 
 #Email
-"""
-EMAIL_HOST = "smtp.alwaysdata.com"
-EMAIL_HOST_USER = "report@joblulz.tk"
-EMAIL_HOST_PASSWORD = "qseofx2"
-DEFAULT_FROM_EMAIL = "Job reporter"
-EMAIL_PORT = "25"
-"""
 EMAIL_HOST = "localhost"
 DEFAULT_FROM_EMAIL = "report@joblulz.tk"
 EMAIL_PORT = "1025"
@@ -67,6 +60,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
+#STATIC_ROOT = 'D:/projects/joblulz/src/public/static/'
 STATIC_ROOT = ''
 
 # URL prefix for static files.

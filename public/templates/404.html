@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% csrf_token %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" />
+    <title>ЛУЛЗДЖОБ : 404</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <div id="top-bg"></div>
+      <div id="header">
+        <h1 id="logo-text"><a href="{{ BASE_URL }}/" title="ЛУЛЗДЖОБ">ЛУЛЗ<span>ДЖОБ</span></a></h1>
+        <h2 id="slogan" title="Наркоманы штоле?">Самые ёбнутые вакансии рунета</h2>
+      </div>
+      <div id="nav">
+        <ul>
+          <li id="current"><a href="#404" title="Все">404</a></li>
+        </ul>
+      </div>
+      <div id="content-wrap">
+        <div id="sidebar">
+          <img src="{{ STATIC_URL }}images/1306311362719.png" alt="WTF">
+        </div>
+        <div id="main">
+          <h1>НЕТ ТАКОЙ СТРАНИЦЫ</h1>
+        </div>
+      </div>
+      <div id="footer-wrap">
+        <div id="footer-bottom">
+          <p>&copy; 2011 <strong>ЛУЛЗДЖОБ</strong></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
