@@ -64,6 +64,7 @@ $(document).ready(function()
         {
             $("#main").empty();
             total = 0;
+
             if(res.jobs.length)
             {
                 $.each(res.jobs, function(index, job)
@@ -71,6 +72,8 @@ $(document).ready(function()
                     var html = '';
                     var d = new Date(job.date);
                     var m = parseInt(d.getMonth());
+
+                    html += '<article>';
                     if(total > 9)
                     {
                         html += '<div class="cat_' + job.category + ' ' + total + ' hidden">';
@@ -88,6 +91,7 @@ $(document).ready(function()
                     html += '<span class="date">Рейтинг: ' + job.likes + '</span>';
                     html += '</p>';
                     html += '</div>';
+                    html += '</article>';
 
                     $("#main").append(html);
 

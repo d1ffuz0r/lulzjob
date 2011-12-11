@@ -44,6 +44,7 @@ def fetch(request):
         for job in jobs_pre:
             result["jobs"].append({"id": job.id,
                                    "name": job.name,
+                                   "category": job.category.id,
                                    "desc": escape(job.desc),
                                    "likes": job.likes,
                                    "date": job.date.__str__(),
