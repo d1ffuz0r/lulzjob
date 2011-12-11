@@ -78,7 +78,7 @@
             <div class="cat_{{ job.category.id }} {{ forloop.counter0 }}">
             {% endif %}
               <h1>{{ job.name }}</h1>
-              <p>{{ job.desc }}</p>
+              <p>{{ job.desc|linebreaksbr }}</p>
               <p class="post-footer">
                 <a href="#full" class="readmore" id="{{ job.id }}">Полностью</a> |
                 Комментарии ({{ job.jobcomm.count }}) |

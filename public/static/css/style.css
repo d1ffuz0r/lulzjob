@@ -485,6 +485,9 @@ input.button {
 #full .post-footer{
     height: 16px;
 }
+#full p{
+    text-align: left;
+}
 .popup .link{
     float: left;
 }
