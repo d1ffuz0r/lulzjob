@@ -159,6 +159,7 @@ class ViewsTests(TestCase):
         })
         self.assertContains(request, text='{"success": false}')
 
+
 class ModelsTest(TestCase):
     def setUp(self):
         self.image = Image.objects.create(name="phpp",

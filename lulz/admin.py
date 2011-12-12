@@ -30,6 +30,7 @@ class AdminJobs(admin.ModelAdmin):
         self.message_user(request, "%s из опубликованых" % message_bit)
     unpublish.short_description = u"Убрать из опубликованых"
 
+
 class AdminCategory(admin.ModelAdmin):
     list_display = ("name",)
 
