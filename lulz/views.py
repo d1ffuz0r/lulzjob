@@ -7,7 +7,8 @@ from django.core.mail import send_mail
 
 escape = lambda string: string.replace("&", "&amp;").\
                                replace("<", "&lt;").\
-                               replace(">", "&gt;")
+                               replace(">", "&gt;").\
+                               replace("\n", "<br>")
 
 
 @render_to("jobs.html")
