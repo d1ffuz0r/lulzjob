@@ -3,6 +3,12 @@ from django.db import models
 
 
 class Image(models.Model):
+    """
+    Image model
+
+    @param name: str
+    @param image: file object
+    """
     name = models.CharField(max_length=100,
                             verbose_name=u"Название")
     image = models.ImageField(upload_to="backgrounds",
@@ -17,6 +23,12 @@ class Image(models.Model):
 
 
 class Category(models.Model):
+    """
+    Category
+
+    @param name: str
+    @param image: file object
+    """
     name = models.CharField(max_length=100,
                             blank=False,
                             verbose_name=u"Название")
@@ -33,6 +45,19 @@ class Category(models.Model):
 
 
 class Job(models.Model):
+    """
+    Job model
+
+    @param name: str
+    @param desc: str
+    @param tags: str
+    @param likes: int
+    @param link: url
+    @param published: boolean
+    @param date: datetime
+    @param category: foreignkey Category
+    @param comments: ManyToManyField Comments
+    """
     name = models.CharField(max_length=100,
                             verbose_name=u"Заголовок")
     desc = models.TextField(max_length=1000,
@@ -62,6 +87,14 @@ class Job(models.Model):
 
 
 class Comments(models.Model):
+    """
+    Comments model
+
+    @param text: str
+    @param job: foreignkey Job
+    @param agent: str
+    @param ip: str
+    """
     text = models.CharField(max_length=200,
                             verbose_name=u"Текст комментария")
     job = models.ForeignKey(Job,
@@ -79,6 +112,13 @@ class Comments(models.Model):
 
 
 class Likes(models.Model):
+    """
+    Likes model
+
+    @param job: foreignkey Job
+    @param agent: str
+    @param ip: str
+    """
     CHOISES = (
         ("1", "+"),
         ("0", "-")

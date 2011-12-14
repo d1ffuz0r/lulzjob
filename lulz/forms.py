@@ -4,6 +4,9 @@ from lulz.models import Job, Comments, Category
 
 
 class AddJob(forms.ModelForm):
+    """
+    Form for create vacancy
+    """
     class Meta:
         model = Job
         fields = ("name", "desc", "tags", "link", "category")
@@ -19,6 +22,9 @@ class AddJob(forms.ModelForm):
 
 
 class AddComment(forms.ModelForm):
+    """
+    Form to add a comment for of vacancy
+    """
     class Meta:
         model = Comments
         fields = ("text", "job")
@@ -29,6 +35,9 @@ class AddComment(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
+    """
+    Search form
+    """
     query = forms.CharField(label=u'Ключевое слово')
     cat = forms.IntegerField(
         label=u'Категория',

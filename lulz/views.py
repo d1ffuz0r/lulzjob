@@ -13,6 +13,12 @@ escape = lambda string: string.replace("&", "&amp;").\
 
 @render_to("jobs.html")
 def home(request):
+    """
+    Home page
+
+    @param request:
+    @return json:
+    """
     count = Job.objects.filter(published=True).count()
     jobs = Job.objects.filter(published=True).order_by("-id").all()
     categories = Category.objects.all()
@@ -27,6 +33,12 @@ def home(request):
 
 @render_json
 def fetch(request):
+    """
+    Fetch vacanciec with catecory
+
+    @param request:
+    @return json:
+    """
     result = {"success": False, "jobs": []}
 
     if request.POST and request.POST["cat"]:
@@ -57,6 +69,12 @@ def fetch(request):
 
 @render_json
 def addvacancy(request):
+    """
+    Add vacancy
+
+    @param request:
+    @return json:
+    """
     result = {"success": False}
     if request.POST:
         form = AddJob(request.POST)
@@ -75,6 +93,12 @@ def addvacancy(request):
 
 @render_json
 def addcomment(request):
+    """
+    Create comment for vacancy
+
+    @param request:
+    @return json:
+    """
     result = {"success": False}
     if request.POST:
         form = AddComment(request.POST)
@@ -97,6 +121,12 @@ def addcomment(request):
 
 @render_json
 def full(request):
+    """
+    Get full description for vacancy
+
+    @param request:
+    @return json:
+    """
     result = {"success": False}
     if request.POST:
         job = Job.objects.filter(published=True).\
@@ -127,6 +157,12 @@ def full(request):
 
 @render_json
 def like(request):
+    """
+    Like or Dislike vacancy
+
+    @param request:
+    @return json:
+    """
     result = {"success": False}
 
     if request.POST:

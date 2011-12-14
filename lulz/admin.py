@@ -13,6 +13,12 @@ class AdminJobs(admin.ModelAdmin):
     actions = ["publish", "unpublish"]
 
     def publish(self, request, queryset):
+        """
+        Show selected vacancies
+        @param request:
+        @param queryset: Selected vacancy
+        @return:
+        """
         public = queryset.update(published=True)
         if public == 1:
             message_bit = u"1 вакансия была опубликована"
@@ -22,6 +28,12 @@ class AdminJobs(admin.ModelAdmin):
     publish.short_description = u"Опубликовать выбраные Вакансии"
 
     def unpublish(self, request, queryset):
+        """
+        Hide selected vacancies
+        @param request:
+        @param queryset: Selected vacancy
+        @return:
+        """
         ubpub = queryset.update(published=False)
         if ubpub == 1:
             message_bit = u"1 вакансия был убрана"
