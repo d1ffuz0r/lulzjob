@@ -145,8 +145,7 @@ def full(request):
         c = Comments.objects.filter(job=job).all()
 
         if c:
-            for text in c:
-                comments.append(escape(text.text))
+        	comments = [escape(text.text) for text in c]
 
         return {"success": True,
                 "vacancy": result,
